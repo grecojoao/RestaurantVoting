@@ -1,0 +1,11 @@
+Voting.Domain/bin/
+Voting.Domain/obj/
+
+Voting.Domain.Infra/bin/
+Voting.Domain.Infra/obj/
+
+Voting.Domain.Tests/bin/
+Voting.Domain.Tests/obj/
+
+.vscode/
+.idea/
