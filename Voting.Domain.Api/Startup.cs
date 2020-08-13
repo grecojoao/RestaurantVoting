@@ -31,6 +31,7 @@ namespace Voting.Domain.Api
             services.AddTransient<IWinnerRestaurantRepository, WinnerRestaurantRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<RestaurantVotingHandler, RestaurantVotingHandler>();
+            services.AddTransient<CreateHungryProfessionalHandler, CreateHungryProfessionalHandler>();
             services.AddTransient<CreateFavoriteRestaurantHandler, CreateFavoriteRestaurantHandler>();
             services.AddSingleton<DataContextInMemory>();
             services.AddSingleton<IRestaurantVotingService, RestaurantVoting>();

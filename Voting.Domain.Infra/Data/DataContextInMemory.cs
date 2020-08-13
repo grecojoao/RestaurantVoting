@@ -35,11 +35,15 @@ namespace Voting.Domain.Infra.Data
 
         private void InitialSettings()
         {
-            _hungryProfessionalsTemp.Add(new HungryProfessional(new Code("123456"), name: "João", password: "123!@#"));
-            _hungryProfessionalsTemp.Add(new HungryProfessional(new Code("789321"), name: "Aline", password: "123!@#"));
-            _hungryProfessionals.Add(new HungryProfessional(new Code("123456"), name: "João", password: "123!@#"));
-            _hungryProfessionals.Add(new HungryProfessional(new Code("789321"), name: "Aline", password: "123!@#"));
-            
+            _hungryProfessionalsTemp.Add(new HungryProfessional(new Code("123456"), name: "Mateus", password: "1234!@#$"));
+            _hungryProfessionalsTemp.Add(new HungryProfessional(new Code("789123"), name: "Marcos", password: "1234!@#$"));
+            _hungryProfessionalsTemp.Add(new HungryProfessional(new Code("456789"), name: "Lucas", password: "1234!@#$"));
+            _hungryProfessionalsTemp.Add(new HungryProfessional(new Code("987654"), name: "João", password: "1234!@#$"));
+            _hungryProfessionals.Add(new HungryProfessional(new Code("123456"), name: "Mateus", password: "1234!@#$"));
+            _hungryProfessionals.Add(new HungryProfessional(new Code("789123"), name: "Marcos", password: "1234!@#$"));
+            _hungryProfessionals.Add(new HungryProfessional(new Code("456789"), name: "Lucas", password: "1234!@#$"));
+            _hungryProfessionals.Add(new HungryProfessional(new Code("987654"), name: "João", password: "1234!@#$"));
+
             _favoriteRestaurantsTemp.Add(new FavoriteRestaurant(new Code("8765"), "Bistrô Gastronomia"));
             _favoriteRestaurantsTemp.Add(new FavoriteRestaurant(new Code("9456"), "Trôbis Gastronomia"));
             _favoriteRestaurants.Add(new FavoriteRestaurant(new Code("8765"), "Bistrô Gastronomia"));
@@ -71,7 +75,13 @@ namespace Voting.Domain.Infra.Data
         }
 
         public async Task AddVote(Vote vote) => _votesTemp.Add(vote);
-        public async Task AddFavoriteRestaurant(FavoriteRestaurant restaurant) => _favoriteRestaurantsTemp.Add(restaurant);
+
+        public async Task AddHungryProfessional(HungryProfessional hungryProfessional) =>
+            _hungryProfessionalsTemp.Add(hungryProfessional);
+
+        public async Task AddFavoriteRestaurant(FavoriteRestaurant restaurant) =>
+            _favoriteRestaurantsTemp.Add(restaurant);
+
         public async Task AddWinner(WinnerRestaurant result) => _winnerRestaurantsTemp.Add(result);
     }
 }

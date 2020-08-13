@@ -7,13 +7,13 @@ namespace Voting.Domain.Api.Controllers
 {
     [ApiController]
     [Route("v1/[controller]")]
-    public class FavoriteRestaurantController : ControllerBase
+    public class HungryProfessionalController : ControllerBase
     {
-        [Route("AddFavoriteRestaurant")]
+        [Route("AddHungryProfessional")]
         [HttpPost]
-        public async Task<CommandResult> AddFavoriteRestaurant(
-            [FromBody] AddFavoriteRestaurantCommand command,
-            [FromServices] CreateFavoriteRestaurantHandler handler)
+        public async Task<CommandResult> AddHungryProfessional(
+            [FromBody] AddHungryProfessionalCommand command,
+            [FromServices] CreateHungryProfessionalHandler handler)
         {
             return (CommandResult) await handler.Handle(command);
         }

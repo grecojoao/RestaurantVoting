@@ -14,6 +14,6 @@ namespace Voting.Domain.Entities
         public string Name { get; private set; }
 
         public override string ToString() =>
-            $"Restaurante Favorito: {Name}, Código: {Code.Number}";
+            $"Restaurante: {Name}, Código: {Code.Number}";
     }
 }

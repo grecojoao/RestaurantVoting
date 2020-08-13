@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace Voting.Domain.Tests.Commands
 {
-    public class AddFavoriteRestaurantToVoteCommandTests
+    public class AddFavoriteRestaurantCommandTests
     {
         private AddFavoriteRestaurantCommand _addFavoriteRestaurantToVoteCommandInvalid;
         private AddFavoriteRestaurantCommand _addFavoriteRestaurantToVoteCommandValid;
