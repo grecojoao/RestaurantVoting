@@ -75,7 +75,7 @@ namespace Voting.Domain.Services
 
             if (!isHappening && !IsClosed)
                 await End();
-            
+
             return isHappening;
         }
 
@@ -83,10 +83,12 @@ namespace Voting.Domain.Services
             TimeIsAfterToStartTime(dateNow) && TimeIsBeforeToEndTime(dateNow);
 
         private bool TimeIsAfterToStartTime(DateTime dateNow) =>
-            dateNow.Hour >= StartTime.Hour && dateNow.Minute >= StartTime.Minute;
+            dateNow.Hour > StartTime.Hour ||
+            dateNow.Hour == StartTime.Hour && dateNow.Minute >= StartTime.Minute;
 
         private bool TimeIsBeforeToEndTime(DateTime dateNow) =>
-            dateNow.Hour <= EndTime.Hour && dateNow.Minute <= EndTime.Minute;
+            dateNow.Hour < EndTime.Hour ||
+            dateNow.Hour == EndTime.Hour && dateNow.Minute <= EndTime.Minute;
 
         private bool IsElectionDay() =>
             DayInNumber <= DurationInDays;
@@ -123,7 +125,8 @@ namespace Voting.Domain.Services
 
         private async Task MarkAsWinner(Code favoriteRestaurantCode)
         {
-            var favoriteRestaurant = await _favoriteRestaurantRepository.GetFavoriteRestaurant(favoriteRestaurantCode.Number);
+            var favoriteRestaurant =
+                await _favoriteRestaurantRepository.GetFavoriteRestaurant(favoriteRestaurantCode.Number);
             var winner = new WinnerRestaurant(favoriteRestaurant, Id);
             await _winnerRestaurantRepository.AddWinner(winner);
         }

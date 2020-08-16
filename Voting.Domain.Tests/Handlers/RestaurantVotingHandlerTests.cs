@@ -125,14 +125,75 @@ namespace Voting.Domain.Tests.Handlers
 
         [Test]
         [Category("Handlers/VoteInMyFavoriteRestaurant")]
-        public async Task DadoUmVotoValidoOVotoDeveSerComputado()
+        public async Task DadoUmVotoValidoComHoraDeVotacaoMaiorQueAHoraInicialDaVotacaoOVotoDeveSerComputado()
         {
-            _restaurantVoting = RestaurantVotingWithOneMinuteAvailable();
+            _dateNow = _dateNow.AddHours(-1);
+            _dateNow = _dateNow.AddMinutes(-1);
+            _startTime = new Time(_dateNow.Hour, _dateNow.Minute);
+            _dateNow = _dateNow.AddHours(1);
+            _dateNow = _dateNow.AddMinutes(1);
+            _endTime = new Time(_dateNow.Hour, _dateNow.Minute);
+
+            _restaurantVoting = new RestaurantVoting(_startTime, _endTime, DurationInDays,
+                _favoriteRestaurantRepository, _voteRepository, _winnerRestaurantRepository);
+
             _handler = HandlerConfigured();
             _commandResult = (CommandResult) await _handler.Handle(_voteInMyFavoriteRestaurantCommandValid);
             Assert.AreEqual(true, _commandResult.Sucess);
         }
+        
+        [Test]
+        [Category("Handlers/VoteInMyFavoriteRestaurant")]
+        public async Task DadoUmVotoValidoComHoraDeVotacaoIgualAHoraInicialDaVotacaoEMinutoDeVotacaoMaiorQueOMinutoInicialDaVotacaoOVotoDeveSerComputado()
+        {
+            _dateNow = _dateNow.AddMinutes(-1);
+            _startTime = new Time(_dateNow.Hour, _dateNow.Minute);
+            _dateNow = _dateNow.AddHours(1);
+            _endTime = new Time(_dateNow.Hour, _dateNow.Minute);
 
+            _restaurantVoting = new RestaurantVoting(_startTime, _endTime, DurationInDays,
+                _favoriteRestaurantRepository, _voteRepository, _winnerRestaurantRepository);
+
+            _handler = HandlerConfigured();
+            _commandResult = (CommandResult) await _handler.Handle(_voteInMyFavoriteRestaurantCommandValid);
+            Assert.AreEqual(true, _commandResult.Sucess);
+        }
+        
+        [Test]
+        [Category("Handlers/VoteInMyFavoriteRestaurant")]
+        public async Task DadoUmVotoValidoComHoraDeVotacaoMenorQueAHoraFinalDaVotacaoOVotoDeveSerComputado()
+        {
+            _startTime = new Time(_dateNow.Hour, _dateNow.Minute);
+            _dateNow = _dateNow.AddHours(1);
+            _dateNow = _dateNow.AddMinutes(1);
+            _endTime = new Time(_dateNow.Hour, _dateNow.Minute);
+
+            _restaurantVoting = new RestaurantVoting(_startTime, _endTime, DurationInDays,
+                _favoriteRestaurantRepository, _voteRepository, _winnerRestaurantRepository);
+
+            _handler = HandlerConfigured();
+            _commandResult = (CommandResult) await _handler.Handle(_voteInMyFavoriteRestaurantCommandValid);
+            Assert.AreEqual(true, _commandResult.Sucess);
+        }
+        
+        [Test]
+        [Category("Handlers/VoteInMyFavoriteRestaurant")]
+        public async Task DadoUmVotoValidoComHoraDeVotacaoIgualAHoraFinalDaVotacaoEMinutoDeVotacaoMenorQueOMinutoFinalDaVotacaoOVotoDeveSerComputado()
+        {
+            _dateNow = _dateNow.AddHours(-1);
+            _dateNow = _dateNow.AddMinutes(1);
+            _startTime = new Time(_dateNow.Hour, _dateNow.Minute);
+            _dateNow = _dateNow.AddHours(1);
+            _endTime = new Time(_dateNow.Hour, _dateNow.Minute);
+
+            _restaurantVoting = new RestaurantVoting(_startTime, _endTime, DurationInDays,
+                _favoriteRestaurantRepository, _voteRepository, _winnerRestaurantRepository);
+
+            _handler = HandlerConfigured();
+            _commandResult = (CommandResult) await _handler.Handle(_voteInMyFavoriteRestaurantCommandValid);
+            Assert.AreEqual(true, _commandResult.Sucess);
+        }
+        
         private RestaurantVoting RestaurantVotingNoTimeAvailable()
         {
             _dateNow = _dateNow.AddMinutes(-2);
@@ -140,7 +201,7 @@ namespace Voting.Domain.Tests.Handlers
             _dateNow = _dateNow.AddMinutes(1);
             _endTime = new Time(_dateNow.Hour, _dateNow.Minute);
 
-            return new RestaurantVoting(_startTime, _endTime, DurationInDays, 
+            return new RestaurantVoting(_startTime, _endTime, DurationInDays,
                 _favoriteRestaurantRepository, _voteRepository, _winnerRestaurantRepository);
         }
 

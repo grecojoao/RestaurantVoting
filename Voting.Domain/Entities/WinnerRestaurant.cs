@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace Voting.Domain.Entities
 {
@@ -17,7 +18,10 @@ namespace Voting.Domain.Entities
 
         public override string ToString()
         {
-            return $"Votação: {IdRestaurantVoting}, Data: {VictoryDate.Date}, {FavoriteRestaurant}";
+            return
+                $"Votação: {IdRestaurantVoting}, " +
+                $"Data: {VictoryDate.Date.ToString(CultureInfo.CurrentCulture).Substring(0, 10)}, " +
+                $"{FavoriteRestaurant}";
         }
     }
 }
